@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'magazine',
     'bulletin_board',
+    'quotes',
 
     # third party apps
     'crispy_forms',
@@ -121,6 +122,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/%s/' % get_media_svn_revision(BASE_DIR)
 
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '/media_root/')
 
 STATIC_ROOT = os.path.join(BASE_DIR, '/static_root/')
