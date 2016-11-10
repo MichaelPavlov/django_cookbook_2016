@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'magazine',
     'bulletin_board',
     'quotes',
+    'movies',
+    'utils',
 
     # third party apps
     'crispy_forms',

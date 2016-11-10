@@ -23,6 +23,7 @@ from django.utils.translation import string_concat
 from django.utils.translation import ugettext_lazy as _
 
 from bulletin_board.views import BulletinView
+from movies.views import movie_list
 
 login_helper = FormHelper()
 login_helper.form_action = reverse_lazy("login_page")
@@ -41,5 +42,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'login/$', login, {"extra_context": {"login_helper": login_helper}}, name="login_page"),
     url(r'^quotes/', include("quotes.urls")),
+    url(r'^movie-list/$', movie_list, name="movie-list"),
     url(r'^$', BulletinView.as_view(), name="home"),
 ]
