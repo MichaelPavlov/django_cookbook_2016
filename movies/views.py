@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
 
 from movies.forms import MovieFilterForm
@@ -6,6 +7,7 @@ from movies.models import Movie, Genre, Director, RATING_CHOICES, Actor
 
 
 def movie_list(request):
+    paginate_by = 15
     qs = Movie.objects.order_by("title")
     form = MovieFilterForm(data=request.GET)
 
@@ -41,10 +43,22 @@ def movie_list(request):
             facets["selected"]["rating"] = (rating, dict(RATING_CHOICES)[rating])
             qs.filter(rating=rating).distinct()
 
+        paginator = Paginator(qs, paginate_by)
+        page_number = request.GET.get("page")
+
+        try:
+            page = paginator.page(page_number)
+        except PageNotAnInteger:
+            # If page is not an integer show first page
+            page = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range, show last existing page
+            page = paginator.page(paginator.num_pages)
+
         context = {
             "form": form,
             "facets": facets,
-            "object_list": qs
+            "object_list": page
         }
 
         return render(request, "movies/movie_list.html", context)

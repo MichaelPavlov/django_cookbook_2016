@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-from django.core.management.base import AppCommand
+from django.core.management.base import BaseCommand
+
+from movies.tests.factories import fill_db
 
 
-class Command(AppCommand):
+class Command(BaseCommand):
     help = "Fills database with fake data"
 
-    def handle_app_config(self, app_config, **options):
-        pass
+    def handle(self, *args, **options):
+        fill_db()
