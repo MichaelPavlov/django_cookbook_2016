@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'quotes',
     'movies',
     'utils',
+    'cv',
 
     # third party apps
     'crispy_forms',

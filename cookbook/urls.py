@@ -42,7 +42,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'login/$', login, {"extra_context": {"login_helper": login_helper}}, name="login_page"),
     url(r'^quotes/', include("quotes.urls")),
+    url(r'^cv/', include("cv.urls")),
     url(r'^movie-list/$', movie_list, name="movie-list"),
-    url(r'^movie-list-cbv/$', include('movies.urls')),
+    url(r'^movie-list-cbv/', include('movies.urls')),
     url(r'^$', BulletinView.as_view(), name="home"),
 ]

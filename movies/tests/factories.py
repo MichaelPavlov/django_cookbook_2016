@@ -69,10 +69,3 @@ class MovieFactory(factory.DjangoModelFactory):
             # A list of groups were passed in, use them
             for actor in extracted:
                 self.actors.add(actor)
-
-
-def fill_db():
-    genres = GenreFactory.create_batch(3)
-    directors = DirectorFactory.create_batch(3)
-    actors = ActorFactory.create_batch(3)
-    MovieFactory.create_batch(3, genres=genres, actors=actors, directors=directors)
