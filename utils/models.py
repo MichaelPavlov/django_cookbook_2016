@@ -22,8 +22,8 @@ class UrlMixin(models.Model):
         website_url = getattr(
             settings, "DEFAULT_WEBSITE_URL", "http://127.0.0.1:8000"
         )
-
         return website_url + path
+
 
     get_url.dont_recurse = True
 

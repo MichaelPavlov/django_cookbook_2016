@@ -16,11 +16,13 @@ Including another URLconf
 from crispy_forms import layout
 from crispy_forms.helper import FormHelper
 from django.conf.urls import url, include
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.auth.views import login
 from django.urls import reverse_lazy
 from django.utils.translation import string_concat
 from django.utils.translation import ugettext_lazy as _
+from haystack.views import SearchView
 
 from bulletin_board.views import BulletinView
 from movies.views import movie_list
@@ -38,6 +40,15 @@ login_helper.layout = layout.Layout(
     layout.Submit("submit", _("Login"), css_class="btn-lg")
 )
 
+
+class CrispySearchView(SearchView):
+    def extra_context(self):
+        helper = FormHelper()
+        helper.form_tag = False
+        helper.disable_csrf = True
+        return {"search_helper": helper}
+
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'login/$', login, {"extra_context": {"login_helper": login_helper}}, name="login_page"),
@@ -47,3 +58,7 @@ urlpatterns = [
     url(r'^movie-list-cbv/', include('movies.urls')),
     url(r'^$', BulletinView.as_view(), name="home"),
 ]
+
+urlpatterns += i18n_patterns(
+    url(r'^search/$', CrispySearchView(), name='haystack_search')
+)

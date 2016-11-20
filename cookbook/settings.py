@@ -15,6 +15,8 @@ import os
 from utils.misc import get_media_svn_revision
 from .conf.dev import *
 
+PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -38,15 +40,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'magazine',
-    'bulletin_board',
-    'quotes',
-    'movies',
-    'utils',
-    'cv',
+    # 'magazine',
+    # 'bulletin_board',
+    # 'quotes',
+    # 'movies',
+    # 'utils',
+    # 'cv',
+    # 'ideas',
+    # 'search',
 
     # third party apps
     'crispy_forms',
+    # 'haystack',
 ]
 
 MIDDLEWARE = [
@@ -110,7 +115,37 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
+
+LANGUAGES = (
+    ("en", "English"),
+    ("de", "Deutsch"),
+    ("fr", "Français"),
+    ("ru", "Русский"),
+)
+#
+# HAYSTACK_CONNECTIONS = {
+#     "default": {
+#         "ENGINE": "search.multilingual_search_backend.MultilingualWhooshEngine",
+#         "PATH": os.path.join(PROJECT_PATH, "cookbook", "tmp", "whoosh_index_ru")
+#     },
+#     "default_en": {
+#         "ENGINE": "search.multilingual_search_backend.MultilingualWhooshEngine",
+#         "PATH": os.path.join(PROJECT_PATH, "cookbook", "tmp", "whoosh_index_en")
+#     },
+#     "default_de": {
+#         "ENGINE": "search.multilingual_search_backend.MultilingualWhooshEngine",
+#         "PATH": os.path.join(PROJECT_PATH, "cookbook", "tmp", "whoosh_index_de")
+#     },
+#     "default_fr": {
+#         "ENGINE": "search.multilingual_search_backend.MultilingualWhooshEngine",
+#         "PATH": os.path.join(PROJECT_PATH, "cookbook", "tmp", "whoosh_index_fr")
+#     },
+#     "default_ru": {
+#         "ENGINE": "search.multilingual_search_backend.MultilingualWhooshEngine",
+#         "PATH": os.path.join(PROJECT_PATH, "cookbook", "tmp", "whoosh_index_ru")
+#     }
+# }
 
 TIME_ZONE = 'UTC'
 
@@ -136,6 +171,11 @@ LOCALE_PATHS = (
 
 FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, 'tmp')
 
+
+# Crispy forms
+CRISPY_TEMPLATE_PACK = "bootstrap3"
+
+
 # Open local settings
 try:
     settings_file = os.path.join(os.path.dirname(__file__), "local_settings.py")
@@ -145,5 +185,3 @@ except IOError:
     pass
 
 
-    # Crispy forms
-CRISPY_TEMPLATE_PACK = "bootstrap3"
