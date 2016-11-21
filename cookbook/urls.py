@@ -22,10 +22,8 @@ from django.contrib.auth.views import login
 from django.urls import reverse_lazy
 from django.utils.translation import string_concat
 from django.utils.translation import ugettext_lazy as _
-from haystack.views import SearchView
 
-from bulletin_board.views import BulletinView
-from movies.views import movie_list
+from utils.views import render_js
 
 login_helper = FormHelper()
 login_helper.form_action = reverse_lazy("login_page")
@@ -40,25 +38,26 @@ login_helper.layout = layout.Layout(
     layout.Submit("submit", _("Login"), css_class="btn-lg")
 )
 
-
-class CrispySearchView(SearchView):
-    def extra_context(self):
-        helper = FormHelper()
-        helper.form_tag = False
-        helper.disable_csrf = True
-        return {"search_helper": helper}
+# class CrispySearchView(SearchView):
+#     def extra_context(self):
+#         helper = FormHelper()
+#         helper.form_tag = False
+#         helper.disable_csrf = True
+#         return {"search_helper": helper}
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'login/$', login, {"extra_context": {"login_helper": login_helper}}, name="login_page"),
-    url(r'^quotes/', include("quotes.urls")),
-    url(r'^cv/', include("cv.urls")),
-    url(r'^movie-list/$', movie_list, name="movie-list"),
+    # url(r'^quotes/', include("quotes.urls")),
+    # url(r'^cv/', include("cv.urls")),
+    # url(r'^movie-list/$', movie_list, name="movie-list"),
     url(r'^movie-list-cbv/', include('movies.urls')),
-    url(r'^$', BulletinView.as_view(), name="home"),
+    # url(r'^bulettin$', BulletinView.as_view(), name="home"),
+    # url(r'^$', BulletinView.as_view(), name="home"),
 ]
 
 urlpatterns += i18n_patterns(
-    url(r'^search/$', CrispySearchView(), name='haystack_search')
+    # url(r'^search/$', CrispySearchView(), name='haystack_search')
+    url(r'^js-settings/$', render_js, {"template_name": "settings.js"}, name='js-settings')
 )

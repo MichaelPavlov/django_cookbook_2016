@@ -1,57 +1,64 @@
 {% block doctype %}<!DOCTYPE html>{% endblock %}
-{% load i18n %}
+{% load i18n static %}
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>{% block title %}{% endblock %}{% trans "My Website" %}</title>
-    <link rel="icon" href="{{ STATIC_URL }}site/img/favicon.ico" type="image/png">
+    <link rel="icon" href="{% static "favicon.ico" %}" type="image/ico">
 
     {% block meta_tags %}{% endblock %}
 
-    {% block stylesheet %}
-        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-        <link href="{{ STATIC_URL }}site/css/style.css" rel="stylesheet" media="screen" type="text/css"/>
+    {% block base_stylesheet %}
+        <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+        <link href="{% static "css/style.css" %}" rel="stylesheet" media="screen" type="text/css"/>
     {% endblock %}
 
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    {% block stylesheet %}{% endblock %}
+
+    {% block base_js %}
+        <script src="{% static "js/jquery-3.1.1.slim.min.js" %}"></script>
+        <script src="{% static "js/bootstrap.min.js" %}"></script>
+        <script src="{% url "js-settings" %}"></script>
+    {% endblock %}
 
     {% block js %}{% endblock %}
     {% block extrahead %}{% endblock %}
 </head>
 <body class="{% block bodyclass %}{% endblock %}">
 {% block page %}
-    <div class="wrapper">
-        <div id="header" class="clearfix">
+    <section class="wrapper">
+        <header class="clearfix container">
             <h1 class="text-center">{% trans "My Website" %}</h1>
             {% block header_navigation %}
+                {% include "utils/header_navigation.html" %}
             {% endblock %}
             {% block language_chooser %}
+                {% include "utils/language_chooser.html" %}
             {% endblock %}
-        </div>
-        {% block container %}
-            <div class="container">
-                <div class="row">
-                    <div id="content" class="col-md-12">
-                        {% block content %}
-                        {% endblock %}
-                    </div>
+        </header>
+
+        <div id="content" class="container clearfix">
+            <div class="row">
+                <div id="content" class="col-md-12">
+                    {% block content %}
+                    {% endblock %}
                 </div>
             </div>
-        {% endblock %}
-        <div id="footer" class="clearfix">
-            {% block footer_navigation %}
-            {% endblock %}
         </div>
-    </div>
+
+        <footer class="clearfix container">
+            {% block footer_navigation %}
+                {% include "utils/footer_navigation.html" %}
+            {% endblock %}
+        </footer>
+    </section>
 {% endblock %}
-<script type="text/javascript">
-    $(function () {
-        $("a[href^='http://']").attr("target", "_blank");
-    });
-</script>
+{#<script type="text/javascript">#}
+{#    $(function () {#}
+{#        $("a[href^='http://']").attr("target", "_blank");#}
+{#    });#}
+{#</script>#}
 {% block extrabody %}{% endblock %}
 </body>
 </html>
