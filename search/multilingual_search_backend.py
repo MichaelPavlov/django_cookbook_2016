@@ -28,6 +28,7 @@ class MultilingualWhooshSearchQuery(WhooshSearchQuery):
         using = "default_%s" % lang_code
         super(MultilingualWhooshSearchQuery, self).__init__(using)
 
+
 class MultilingualWhooshEngine(WhooshEngine):
     backend = MultilingualWhooshSearchBackend
     query = MultilingualWhooshSearchQuery

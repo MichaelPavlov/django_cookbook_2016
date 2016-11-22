@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -17,13 +16,16 @@ class Migration(migrations.Migration):
             name='Bulletin',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('bulletin_type', models.CharField(choices=[('searching', 'Searching'), ('offering', 'Offering')], max_length=20, verbose_name='Type')),
+                ('bulletin_type',
+                 models.CharField(choices=[('searching', 'Searching'), ('offering', 'Offering')], max_length=20,
+                                  verbose_name='Type')),
                 ('title', models.CharField(max_length=255, verbose_name='Title')),
                 ('description', models.TextField(max_length=300, verbose_name='Description')),
                 ('contact_person', models.CharField(max_length=255, verbose_name='Contact Person')),
                 ('phone', models.CharField(blank=True, max_length=200, verbose_name='Phone')),
                 ('email', models.EmailField(blank=True, max_length=254, verbose_name='Email')),
-                ('image', models.ImageField(blank=True, max_length=255, upload_to='bulletin_board/', verbose_name='Image')),
+                ('image',
+                 models.ImageField(blank=True, max_length=255, upload_to='bulletin_board/', verbose_name='Image')),
             ],
             options={
                 'verbose_name_plural': 'Bulletins',

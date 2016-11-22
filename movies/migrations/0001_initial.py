@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -41,7 +40,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=255, verbose_name='Title')),
-                ('rating', models.PositiveIntegerField(choices=[(1, '\uf0e9'), (2, '\uf0e9\uf0e9'), (3, '\uf0e9\uf0e9\uf0e9'), (4, '\uf0e9\uf0e9\uf0e9\uf0e9'), (5, '\uf0e9\uf0e9\uf0e9\uf0e9\uf0e9')], default=5)),
+                ('rating', models.PositiveIntegerField(
+                    choices=[(1, '\uf0e9'), (2, '\uf0e9\uf0e9'), (3, '\uf0e9\uf0e9\uf0e9'),
+                             (4, '\uf0e9\uf0e9\uf0e9\uf0e9'), (5, '\uf0e9\uf0e9\uf0e9\uf0e9\uf0e9')], default=5)),
                 ('actors', models.ManyToManyField(blank=True, to='movies.Actor')),
                 ('directors', models.ManyToManyField(blank=True, to='movies.Director')),
                 ('genres', models.ManyToManyField(blank=True, to='movies.Genre')),

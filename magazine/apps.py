@@ -7,4 +7,4 @@ class MagazineAppConfig(AppConfig):
     verbose_name = _("Magazine")
 
     def ready(self):
-        from . import signals
+        pass

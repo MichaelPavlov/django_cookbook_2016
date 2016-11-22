@@ -26,7 +26,8 @@
             <nav>
                 <ul class="pager">
                     <li class="previous">
-                        {% if page.has_previous %} <a href="{% modify_query page=page.previous_page_number %}"> {% endif %}
+                        {% if page.has_previous %}
+                            <a href="{% modify_query page=page.previous_page_number %}"> {% endif %}
                         <span aria-hidden="true">&laquo;</span>
                         {% if page.has_previous %} </a> {% endif %}
                     </li>

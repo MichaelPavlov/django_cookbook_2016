@@ -1,20 +1,12 @@
 # -*- coding: UTF-8 -*-
-import os
 
 from django.conf import settings
 from django.db import models
 from django.urls import NoReverseMatch
 from django.urls import reverse
-from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from utils.models import UrlMixin
-
-
-def upload_to(instance, filename):
-    now = timezone.now()
-    filename_base, filename_ext = os.path.splittext(filename)
-    return "quotes/%s%s" % (now.strftime("%Y/%m/%Y%m%d%H%M%S"), filename_ext.lower())
+from utils.models import UrlMixin, upload_to
 
 
 class InspirationalQuote(UrlMixin):

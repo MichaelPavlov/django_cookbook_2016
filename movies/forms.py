@@ -2,7 +2,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from movies.models import Genre, Director, Actor, RATING_CHOICES
+from movies.models import RATING_CHOICES
 
 
 class MovieFilterForm(forms.Form):

@@ -4,7 +4,7 @@ window.settings = {
     lang: '{{ LANGUAGE_CODE|escapejs }}',
     languages: {
         {% for lang_code, lang_name in LANGUAGES %}
-            '{{ lang_code|escapejs }}': '{{ lang_name|escapejs }}'{% if not forloop.last %},{% endif %}
+        '{{ lang_code|escapejs }}': '{{ lang_name|escapejs }}'{% if not forloop.last %}, {% endif %}
         {% endfor %}
     }
 

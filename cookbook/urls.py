@@ -15,8 +15,10 @@ Including another URLconf
 """
 from crispy_forms import layout
 from crispy_forms.helper import FormHelper
+from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.i18n import i18n_patterns
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.views import login
 from django.urls import reverse_lazy
@@ -53,6 +55,7 @@ urlpatterns = [
     # url(r'^cv/', include("cv.urls")),
     # url(r'^movie-list/$', movie_list, name="movie-list"),
     url(r'^movie-list-cbv/', include('movies.urls')),
+    url(r'^locations/', include('locations.urls')),
     # url(r'^bulettin$', BulletinView.as_view(), name="home"),
     # url(r'^$', BulletinView.as_view(), name="home"),
 ]
@@ -61,3 +64,7 @@ urlpatterns += i18n_patterns(
     # url(r'^search/$', CrispySearchView(), name='haystack_search')
     url(r'^js-settings/$', render_js, {"template_name": "settings.js"}, name='js-settings')
 )
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
