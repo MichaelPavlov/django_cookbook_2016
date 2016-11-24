@@ -27,10 +27,6 @@ function showMap() {
         position: latlng,
         map: map
     });
-//    console.log("showMap");
 }
-
-//show_best_images();
-//showMap();
 
 $(window).on('resize', show_best_images)

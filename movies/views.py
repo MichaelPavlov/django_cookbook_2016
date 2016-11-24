@@ -131,4 +131,4 @@ def movie_list(request):
             "object_list": page
         }
 
-        return render(request, "movies/movie_list.html", context)
+        return render(request, "movies/movie_list_old.html", context)

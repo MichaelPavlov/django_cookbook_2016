@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n utility_tags static %}
+{% load i18n utility_tags %}
 {% block sidebar %}
     <div class="filters panel-group" id="accordion">
         <div class="panel panel-default">
@@ -91,24 +91,34 @@
 
 {% block content %}
     <h2>{% trans "Top Movies" %}</h2>
-    <div class="movie-list">
+    <div class="movie_list">
         {% for movie in object_list %}
-            <div class="item">
-                <p>{{ movie.rank }}
-                    <strong>{{ movie.title }}</strong>
-                    ({{ movie.year }})
-                    <span class="badge">{% trans "IMDB rating" %}: {{ movie.rating }}</span>
-                </p>
+            <div class="movie alert alert-info">
+                <p>{{ movie.title }}</p>
             </div>
         {% endfor %}
-        {% if object_list.has_next %}
-            <p class="pagination">
-            <a class="next-page" href="{% modify_query page=object_list.next_page_number %}">{% trans "More..." %}</a>
-            </p>
-        {% endif %}
     </div>
-{% endblock %}
-{% block extrabody %}
-    <script src="{% static "js/jquery.jscroll.min.js" %}"></script>
-    <script src="{% static "js/list.js" %}"></script>
+
+
+    {% if object_list.has_other_pages %}
+        <ul class="pagination">
+            {% if object_list.has_previous %}
+                <li><a href="{% modify_query page=object_list.previous_page_number %}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+    {% for page_number in object_list.paginator.page_range %}
+        {% if page_number == object_list.number %}
+            <li class="active"><span>{{ page_number }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+            <li><a href="{% modify_query page=page_number %}">{{ page_number }}</a></li>
+        {% endif %}
+    {% endfor %}
+    {% if object_list.has_next %}
+        <li><a href="{% modify_query page=object_list.next_page_number %}">&raquo;</a></li>
+    {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
 {% endblock %}
