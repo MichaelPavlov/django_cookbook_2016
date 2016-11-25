@@ -56,6 +56,7 @@ urlpatterns = [
     # url(r'^movie-list/$', movie_list, name="movie-list"),
     url(r'^movie-list-cbv/', include('movies.urls')),
     url(r'^locations/', include('locations.urls', namespace="locations")),
+    url(r'^likes/', include('likes.urls', namespace="likes")),
     # url(r'^bulettin$', BulletinView.as_view(), name="home"),
     # url(r'^$', BulletinView.as_view(), name="home"),
 ]
