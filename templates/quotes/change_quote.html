@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags static %}
+
+{% block stylesheet %}
+    {{ block.super }}
+    <link href="{% static "ajaxuploader/css/fileuploader.css" %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+    {% crispy form %}
+{% endblock %}
+
+{% block extrabody %}
+    <script src="{% static "ajaxuploader/js/fileuploader.js" %}"></script>
+    <script>
+        var translatable_file_uploader_options = {
+            template: `
+                <div class="qq-upload-drop-area">
+                    <span>{% trans "Drop image here" %}</span>
+                </div>
+                <div class="qq-uploader">
+                    <div class="qq-upload-button btn">
+                        <span class="glyphicon glyphicon-upload"></span>{% trans "Upload Image" %}
+                    </div>&nbsp;
+                    <button class="btn btn-danger qq-delete-button">
+                        <span class="glyphicon glyphicon-trash"></span>
+                        {% trans "Delete" %}
+                    </button>
+                    <ul class="qq-upload-list"></ul>
+                </div>
+            `,
+            fileTemplate: `
+                <li>
+                    <span class="qq-upload-file"></span>
+                    <span class="qq-upload-spinner"></span>
+                    <span class="qq-upload-size"></span>
+                    <a class="qq-upload-cancel" href="#">{% trans "Cancel" %}</a>
+                    <span class="qq-upload-failed-text">{% trans "Failed" %}</a>
+                </li>
+            `,
+            messages: {
+                typeError: '{% trans "{file} has invalid extension. Only {extensions} are allowed" %}',
+                sizeError: '{% trans "{file} is too large, maximum file size is {sizeLimit}." %}',
+                minSizeError: '{% trans "{file} is too small, minimum file size is {minSizeLimit}." %}',
+                emptyError: '{% trans "{file} is empty." %}',
+                fileLimitError: '{% trans "No more than {filesLimit} files are allowed to be uploaded." %}',
+                onLeave: '{% trans "The files are being uploaded, if you leave now the upload will be cancelled." %}'
+            }
+        };
+        var ajax_uploader_path = '{% url "quotes:ajax-uploader" %}';
+    </script>
+    <script src="{% static "js/change_quote.js" %}"></script>
+{% endblock %}

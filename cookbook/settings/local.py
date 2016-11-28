@@ -43,6 +43,11 @@ INSTALLED_APPS = [
     'utils',
     'locations',
     'likes',
+    'quotes',
+
+    # third party apps
+    'ajaxuploader',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

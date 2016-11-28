@@ -1,12 +1,16 @@
 # -*- coding: UTF-8 -*-
 import os
 
+from ajaxuploader.views import AjaxFileUploader
 from django.contrib.auth.decorators import login_required
 from django.http import FileResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.text import slugify
 
+from quotes.forms import InspirationalQuoteForm
 from quotes.models import InspirationalQuote
+
+ajax_uploader = AjaxFileUploader()
 
 
 @login_required(login_url="login_page")
@@ -25,3 +29,17 @@ def download_quote_picture(request, quote_id):
     )
 
     return response
+
+
+def add_quote(request):
+    if request.method == "POST":
+        form = InspirationalQuoteForm(
+            data=request.POST,
+            files=request.FILES
+        )
+        if form.is_valid():
+            quote = form.save()
+            return redirect("add_quote_done")
+    else:
+        form = InspirationalQuoteForm()
+    return render(request, "quotes/change_quote.html", {"form": form})
