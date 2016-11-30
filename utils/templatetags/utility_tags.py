@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+import re
 import urllib.parse
 from datetime import datetime
 
 from django import template
 from django.utils import timezone
 from django.utils.encoding import force_str
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 register = template.Library()
@@ -121,3 +123,24 @@ def days_since(value):
     else:
         # Date is in the future, return formated date
         return value.strftime("%B %d, %Y")
+
+
+media_tags_regex = re.compile(
+    r'<figure[\S\s]]+?</figure>|'
+    r'<object[\S\s]]+?</object>|'
+    r'<video[\S\s]]+?</video>|'
+    r'<audio[\S\s]]+?</audio>|'
+    r'<iframe[\S\s]]+?</iframe>|'
+    r'<img|embed[^>]+>',
+    re.MULTILINE
+)
+
+
+@register.filter
+def first_media(content):
+    """Returns the first image or flash file from the html content"""
+    m = media_tags_regex.search(content)
+    media_tag = ""
+    if m:
+        media_tag = m.group()
+    return mark_safe(media_tag)
