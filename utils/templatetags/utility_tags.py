@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 import urllib.parse
+from datetime import datetime
 
 from django import template
+from django.utils import timezone
 from django.utils.encoding import force_str
+from django.utils.translation import ugettext_lazy as _
 
 register = template.Library()
 
@@ -98,3 +101,23 @@ def remove_from_query(context, *args, **kwargs):
             [(key, force_str(value)) for (key, value) in query_params if value]
         ).replace("&", "&amp;")
     return query_string
+
+
+### FILTERS ###
+
+@register.filter
+def days_since(value):
+    """Returns number of fays between today and value"""
+    today = timezone.now().date()
+    if isinstance(value, datetime):
+        value = value.date()
+    diff = today - value
+    if diff.days > 1:
+        return _("%s days ago") % diff.days
+    elif diff.days == 1:
+        _("yesterday")
+    elif diff.days == 0:
+        return _("today")
+    else:
+        # Date is in the future, return formated date
+        return value.strftime("%B %d, %Y")
